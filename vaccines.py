@@ -22,5 +22,5 @@ def getVaccines(country: str) -> list[str]:
     # Find the disease name within each table cell
     for clinicianDisease in clinicianDiseases:
         diseaseName = clinicianDisease.find("a").text
-        diseaseNames.append(diseaseName)
+        diseaseNames.append({"vaccine": diseaseName})
     return diseaseNames
