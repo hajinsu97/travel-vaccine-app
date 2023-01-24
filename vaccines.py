@@ -8,6 +8,7 @@ CLINICIAN_DISEASES_HTML_CLASS_NAME = "clinician-disease"
 
 
 def getVaccines(country: str) -> list[str]:
+    # TODO: Add check if country is valid and abort if not
     page = requests.get(URL + country)
     soup = BeautifulSoup(page.content, "html.parser")
     # Find the "Vaccines and Medicines" table
