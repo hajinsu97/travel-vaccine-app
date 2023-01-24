@@ -1,0 +1,31 @@
+openapi: 3.0.0
+info:
+  title: "Travel Destination Vaccines REST API"
+  description: "An API about vaccines for travel destinations"
+  version: "1.0.0"
+
+servers:
+  - url: "/api"
+  
+paths:
+  /destination/{country}/vaccines:
+    get:
+      operationId: "vaccines.getVaccines"
+      tags:
+        - "Vaccines"
+      summary: "Reads the list of vaccines for {country}"
+      parameters:
+        - $ref: "#/components/parameters/country"
+      responses:
+        "200":
+          description: "Successfully read vaccines list"
+
+components:
+  parameters:
+    country:
+      name: country
+      in: path
+      schema:
+        type: string
+      required: true
+      description: "Name of the country to get"
