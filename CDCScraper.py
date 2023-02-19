@@ -8,18 +8,23 @@ CLINICIAN_DISEASES_HTML_CLASS_NAME = "clinician-disease"
 
 
 def getVaccines(country: str) -> list[str]:
-    # TODO: Add check if country is valid and abort if not
     page = requests.get(URL + country)
-    soup = BeautifulSoup(page.content, "html.parser")
+
+    if (page.status_code == 404) {
+        abort(404, response=f"Country with the name {country} could not be found.")
+    }
+
     # Find the "Vaccines and Medicines" table
+    soup = BeautifulSoup(page.content, "html.parser")
     vaccinesAndMedicinesTable = soup.find(id=VACCINES_AND_MEDICINES_HTML_ID)
+
     # Find each entry for "Vaccine for disease" in the table
     clinicianDiseases = vaccinesAndMedicinesTable.find_all(
         "td", class_=CLINICIAN_DISEASES_HTML_CLASS_NAME
     )
 
-    diseaseNames = []
     # Find the disease name within each table cell
+    diseaseNames = []
     for clinicianDisease in clinicianDiseases:
         diseaseName = clinicianDisease.find("a").text
         diseaseNames.append({"vaccine": diseaseName})
