@@ -6,11 +6,11 @@ info:
 
 servers:
   - url: "/api"
-  
+
 paths:
   /destinations/{country}/vaccines:
     get:
-      operationId: "vaccines.getVaccines"
+      operationId: "CDCScraper.getVaccines"
       tags:
         - "Vaccines"
       summary: "Reads the list of vaccines for {country}"
@@ -19,6 +19,12 @@ paths:
       responses:
         "200":
           description: "Successfully read vaccines list"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VaccineList"
+        "404":
+          description: "Country with the specified name not found"
 
 components:
   parameters:
@@ -27,5 +33,31 @@ components:
       in: path
       schema:
         type: string
+        example: brazil
       required: true
       description: "Name of the country to get"
+  schemas:
+    Vaccine:
+      type: object
+      properties:
+        disease:
+          type: string
+          description: The name of the disease/illness to get a vaccine for.
+          example: Yellow Fever
+        recommendations:
+          type: string
+          description: Recommendations for the vaccine in the given country provided by the CDC website.
+          example: |
+            Recommended for all travelers ≥9 months of age going to the following areas: the entire states of Acre, Amapá, Amazonas, Distrito Federal (including the capital city of Brasília), Espirito Santo,* Goiás, Maranhão, Mato Grosso, Mato Grosso do Sul, Minas Gerais, Pará, Paraná,* Rio de Janeiro (including the city of Rio de Janeiro and all coastal islands),* Rio Grande do Sul,* Rondônia, Roraima, Santa Catarina,* São Paulo (including the city of São Paulo and all coastal islands),* and Tocantins and designated areas (see map) of the following states: Bahia* and Piauí. Vaccination is also recommended for travelers visiting Iguaçu Falls. Not recommended for travelers whose itineraries are limited to areas not listed above, including the cities of Fortaleza and Recife (see map). *Note: In 2017, CDC expanded YF vaccination recommendations for travelers to Brazil in response to a large YF outbreak in multiple eastern states. The expanded YF vaccination recommendations for these states are provisional.
+    VaccineList:
+      type: object
+      properties:
+        link:
+          type: string
+          format: uri
+          description: A link to the country's CDC travel destination webpage.
+          example: https://wwwnc.cdc.gov/travel/destinations/traveler/none/brazil
+        vaccines:
+          type: array
+          items:
+            $ref: "#/components/schemas/Vaccine"
