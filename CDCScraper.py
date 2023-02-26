@@ -2,7 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 from flask import abort
 
-from Vaccine import Vaccine
+from model.Vaccine import Vaccine
+from model.VaccinesList import VaccinesList
 
 URL = "https://wwwnc.cdc.gov/travel/destinations/traveler/none/"
 VACCINES_AND_MEDICINES_HTML_ID = "vaccines-and-medicines"
@@ -10,12 +11,12 @@ CLINICIAN_DISEASES_HTML_CLASS_NAME = "clinician-disease"
 CLINICIAN_RECOMMENDATIONS_HTML_CLASS_NAME = "clinician-recomendations"
 
 
-def getVaccines(country: str) -> list[str]:
-    page = requests.get(URL + country)
+def getVaccines(country: str) -> VaccinesList:
+    destinationUrl = URL + country
+    page = requests.get(destinationUrl)
 
-    if (page.status_code == 404) {
+    if (page.status_code == 404):
         abort(404, response=f"Country with the name {country} could not be found.")
-    }
 
     # Find the "Vaccines and Medicines" table
     soup = BeautifulSoup(page.content, "html.parser")
@@ -38,4 +39,4 @@ def getVaccines(country: str) -> list[str]:
         recommendation = clinicianRecommendations[x].find("p").text
         vaccinesList.append(Vaccine(diseaseName, recommendation).__dict__)
     # TODO: Missing Yellow fever recommendation
-    return vaccinesList
+    return VaccinesList(destinationUrl, vaccinesList).__dict__
