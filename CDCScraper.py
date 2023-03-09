@@ -35,8 +35,10 @@ def getVaccines(country: str) -> VaccinesList:
     # Find the disease name within each table cell
     vaccinesList = []
     for x in range(len(clinicianDiseases)):
-        diseaseName = clinicianDiseases[x].find("a").text
-        recommendation = clinicianRecommendations[x].find("p").text
+        diseaseName = clinicianDiseases[x].text.strip()
+        # TODO: For each <p> concatenate and set as recommendation
+        recommendation = clinicianRecommendations[x].text.strip()
+            
         vaccinesList.append(Vaccine(diseaseName, recommendation).__dict__)
     # TODO: Missing Yellow fever recommendation
     return VaccinesList(destinationUrl, vaccinesList).__dict__
