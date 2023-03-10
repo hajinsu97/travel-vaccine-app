@@ -13,9 +13,8 @@ CLINICIAN_RECOMMENDATIONS_HTML_CLASS_NAME = "clinician-recomendations"
 def getVaccines(country: str) -> list[str]:
     page = requests.get(URL + country)
 
-    if (page.status_code == 404) {
-        abort(404, response=f"Country with the name {country} could not be found.")
-    }
+    if page.status_code == 404:
+        abort(404, f"Country with the name {country} could not be found.")
 
     # Find the "Vaccines and Medicines" table
     soup = BeautifulSoup(page.content, "html.parser")
