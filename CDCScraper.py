@@ -15,8 +15,8 @@ def getVaccines(country: str) -> VaccinesList:
     destinationUrl = URL + country
     page = requests.get(destinationUrl)
 
-    if (page.status_code == 404):
-        abort(404, response=f"Country with the name {country} could not be found.")
+    if page.status_code == 404:
+        abort(404, f"Country with the name {country} could not be found.")
 
     # Find the "Vaccines and Medicines" table
     soup = BeautifulSoup(page.content, "html.parser")
