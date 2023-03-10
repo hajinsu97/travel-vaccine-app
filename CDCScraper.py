@@ -21,7 +21,7 @@ def getVaccines(country: str) -> VaccinesList:
     # Find the "Vaccines and Medicines" table
     soup = BeautifulSoup(page.content, "html.parser")
     vaccinesAndMedicinesTable = soup.find(id=VACCINES_AND_MEDICINES_HTML_ID)
-    
+
     # Get a list of each entry under "Vaccine for disease" in the table
     clinicianDiseases = vaccinesAndMedicinesTable.find_all(
         "td", class_=CLINICIAN_DISEASES_HTML_CLASS_NAME
