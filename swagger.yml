@@ -98,20 +98,31 @@ components:
     Dosage:
       type: object
       properties:
+        genericName:
+          type: string
+          description: The name of the active ingredient.
+          example: "Hepatitis A vaccine, inactivated"
+        brandName:
+          type: string
+          description: The brand name of the vaccine.
+          example: "Avaxim"
         minAge:
           $ref: "#/components/schemas/Age"
           description: The minimum age (years) a person should be for the dosage.
         maxAge:
           $ref: "#/components/schemas/Age"
           description: The maximum age (years) a person should be for the dosage.
-        dose:
-          type: string
-          description: The amount of the dosage.
-          example: 1.5 ml
+        amount:
+          $ref: "#/components/schemas/Amount"
+          description: The amount of a medication to take at one specific time.
+        numberOfDoses:
+          type: integer
+          description: The number of total doses a patient needs to take.
+          example: 3
         schedule:
           type: string
           description: The schedule to take the dosage.
-          example: "3 doses: 0, 1, 6 months"
+          example: "0, 8d+, 15d+"
     DosageList:
       type: object
       properties:
@@ -131,3 +142,15 @@ components:
           enum: [months, years]
           example: years
           description: Unit of measurement for the age.
+    Amount:
+      type: object
+      properties:
+        value:
+          type: number
+          example: 1.5
+          description: Amount of the dose.
+        unit:
+          type: string
+          enum: [ml, mg, tablet]
+          example: ml
+          description: Unit of measurement in metric mass units.
