@@ -112,8 +112,8 @@ components:
         maxAge:
           $ref: "#/components/schemas/Age"
           description: The maximum age (years) a person should be for the dosage.
-        amount:
-          $ref: "#/components/schemas/Amount"
+        dose:
+          $ref: "#/components/schemas/Dose"
           description: The amount of a medication to take at one specific time.
         numberOfDoses:
           type: integer
@@ -142,7 +142,7 @@ components:
           enum: [months, years]
           example: years
           description: Unit of measurement for the age.
-    Amount:
+    Dose:
       type: object
       properties:
         value:
