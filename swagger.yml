@@ -113,8 +113,9 @@ components:
           $ref: "#/components/schemas/Age"
           description: The maximum age (years) a person should be for the dosage.
         dose:
-          $ref: "#/components/schemas/Dose"
+          type: string
           description: The amount of a medication to take at one specific time.
+          example: "1.5 ml"
         numberOfDoses:
           type: integer
           description: The number of total doses a patient needs to take.
@@ -142,15 +143,3 @@ components:
           enum: [months, years]
           example: years
           description: Unit of measurement for the age.
-    Dose:
-      type: object
-      properties:
-        value:
-          type: number
-          example: 1.5
-          description: Amount of the dose.
-        unit:
-          type: string
-          enum: [ml, mg, tablet]
-          example: ml
-          description: Unit of measurement in metric mass units.
