@@ -1,6 +1,6 @@
 import unittest
 
-class TestCDCScraper(unittest.TestCase):
+class TestTravelDestinationVaccineService(unittest.TestCase):
 
     def test_getVaccines_cdcSiteDoesNotLoad(self):
         # TODO 404
@@ -27,6 +27,9 @@ class TestCDCScraper(unittest.TestCase):
         # TODO 
 
     def test_getVaccines_countryHasManyVaccinesAllHaveRecommendations(self):
+        # TODO
+
+    def test_getVaccines_RecommendationsAreInDifferentParagraphs(self):
         # TODO 
 
 if __name__ == '__main__':
