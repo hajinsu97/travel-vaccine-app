@@ -10,7 +10,7 @@ servers:
 paths:
   /destinations/{country}/vaccines:
     get:
-      operationId: "CDCScraper.getVaccines"
+      operationId: "service.TravelDestinationVaccineService.getVaccines"
       tags:
         - "Destinations"
       summary: "Reads the list of vaccines for {country}"
@@ -27,7 +27,7 @@ paths:
           description: "Country with the specified name not found"
   /vaccines/{vaccine}/dosages:
     get:
-      operationId: VaccineService.getDosages
+      operationId: service.VaccineDosageService.getDosages
       tags:
         - "Vaccines"
       summary: "Reads the list of dosages for {vaccine}"
