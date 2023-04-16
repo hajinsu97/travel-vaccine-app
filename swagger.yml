@@ -25,14 +25,14 @@ paths:
                 $ref: "#/components/schemas/VaccineList"
         "404":
           description: "Country with the specified name not found"
-  /vaccines/{vaccine}/dosages:
+  /vaccines/{disease}/dosages:
     get:
       operationId: service.VaccineDosageService.getDosages
       tags:
         - "Vaccines"
-      summary: "Reads the list of dosages for {vaccine}"
+      summary: "Reads the list of dosages for {disease}"
       parameters:
-        - $ref: "#/components/parameters/vaccine"
+        - $ref: "#/components/parameters/disease"
         - $ref: "#/components/parameters/dateOfBirth"
       responses:
         "200":
@@ -42,7 +42,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/DosageList"
         "404":
-          description: "Vaccine with the specified name not found"
+          description: "Disease with the specified name not found"
 
 components:
   parameters:
@@ -54,14 +54,14 @@ components:
         example: brazil
       required: true
       description: "Name of the country to get"
-    vaccine:
-      name: vaccine
+    disease:
+      name: disease
       in: path
       schema:
         type: string
         example: hepatitis-b
       required: true
-      description: "Name of the vaccine to get"
+      description: "Name of the disease to get a vaccine for"
     dateOfBirth:
       name: dateOfBirth
       in: query
