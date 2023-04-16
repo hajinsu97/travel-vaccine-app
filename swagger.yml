@@ -10,9 +10,9 @@ servers:
 paths:
   /destinations/{country}/vaccines:
     get:
-      operationId: "CDCScraper.getVaccines"
+      operationId: "service.TravelDestinationVaccineService.getVaccines"
       tags:
-        - "Vaccines"
+        - "Destinations"
       summary: "Reads the list of vaccines for {country}"
       parameters:
         - $ref: "#/components/parameters/country"
@@ -25,6 +25,24 @@ paths:
                 $ref: "#/components/schemas/VaccineList"
         "404":
           description: "Country with the specified name not found"
+  /vaccines/{disease}/dosages:
+    get:
+      operationId: service.VaccineDosageService.getDosages
+      tags:
+        - "Vaccines"
+      summary: "Reads the list of dosages for {disease}"
+      parameters:
+        - $ref: "#/components/parameters/disease"
+        - $ref: "#/components/parameters/dateOfBirth"
+      responses:
+        "200":
+          description: "Successfully read dosages list"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DosageList"
+        "404":
+          description: "Disease with the specified name not found"
 
 components:
   parameters:
@@ -36,6 +54,22 @@ components:
         example: brazil
       required: true
       description: "Name of the country to get"
+    disease:
+      name: disease
+      in: path
+      schema:
+        type: string
+        example: hepatitis-b
+      required: true
+      description: "Name of the disease to get a vaccine for"
+    dateOfBirth:
+      name: dateOfBirth
+      in: query
+      schema:
+        type: string
+        format: date
+        example: 2000-03-31
+      description: "Patient's date of birth"
   schemas:
     Vaccine:
       type: object
@@ -61,3 +95,51 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Vaccine"
+    Dosage:
+      type: object
+      properties:
+        genericName:
+          type: string
+          description: The name of the active ingredient.
+          example: "Hepatitis A vaccine, inactivated"
+        brandName:
+          type: string
+          description: The brand name of the vaccine.
+          example: "Avaxim"
+        minAge:
+          $ref: "#/components/schemas/Age"
+          description: The minimum age (years) a person should be for the dosage.
+        maxAge:
+          $ref: "#/components/schemas/Age"
+          description: The maximum age (years) a person should be for the dosage.
+        dose:
+          type: string
+          description: The amount of a medication to take at one specific time.
+          example: "1.5 ml"
+        numberOfDoses:
+          type: integer
+          description: The number of total doses a patient needs to take.
+          example: 3
+        schedule:
+          type: string
+          description: The schedule to take the dosage.
+          example: "0, 8d+, 15d+"
+    DosageList:
+      type: object
+      properties:
+        dosages:
+          type: array
+          items:
+            $ref: "#/components/schemas/Dosage"
+    Age:
+      type: object
+      properties:
+        value:
+          type: integer
+          example: 18
+          description: Value of the age.
+        unit:
+          type: string
+          enum: [months, years]
+          example: years
+          description: Unit of measurement for the age.

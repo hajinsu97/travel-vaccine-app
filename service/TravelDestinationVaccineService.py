@@ -15,13 +15,13 @@ def getVaccines(country: str) -> VaccinesList:
     destinationUrl = URL + country
     page = requests.get(destinationUrl)
 
-    if (page.status_code == 404):
-        abort(404, response=f"Country with the name {country} could not be found.")
+    if page.status_code == 404:
+        abort(404, f"Country with the name {country} could not be found.")
 
     # Find the "Vaccines and Medicines" table
     soup = BeautifulSoup(page.content, "html.parser")
     vaccinesAndMedicinesTable = soup.find(id=VACCINES_AND_MEDICINES_HTML_ID)
-    
+
     # Get a list of each entry under "Vaccine for disease" in the table
     clinicianDiseases = vaccinesAndMedicinesTable.find_all(
         "td", class_=CLINICIAN_DISEASES_HTML_CLASS_NAME
