@@ -8,6 +8,22 @@ servers:
   - url: "/api"
 
 paths:
+  /destinations:
+    get:
+      operationId: "service.TravelDestinationVaccineService.getDestinations"
+      tags:
+        - "Destinations"
+      summary: "Reads the list of travel destinations"
+      responses:
+        "200":
+          description: "Successfully read destinations list"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  example: ["USA", "Canada", "Germany", "France", "Japan", "India"]
   /destinations/{country}/vaccines:
     get:
       operationId: "service.TravelDestinationVaccineService.getVaccines"
