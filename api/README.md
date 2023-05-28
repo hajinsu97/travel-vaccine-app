@@ -8,7 +8,12 @@ API for retrieving latest vaccine information for travel destinations provided b
 Activate venv
 
 ```bash
-.\venv\Scripts\activate
+# Create venv (for first time only)
+python3 -m venv env
+# Activate the venv
+source env/bin/activate
+# Install requirements
+pip install -r requirements.txt
 ```
 
 Start local server
