@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from flask import abort
-
+from model.Destination import Destination
 from model.Vaccine import Vaccine
 from model.VaccinesList import VaccinesList
 
@@ -23,8 +23,9 @@ def getDestinations() -> list[str]:
         # Extract the country names from the <a> elements within the <li> elements
         for li in li_elements:
             destination_url_path = li.find('a').get('href')
-            country_name = destination_url_path.split("/")[-1]
-            country_list.append(country_name)
+            country_id = destination_url_path.split("/")[-1]
+            country_name = li.find('a').text
+            country_list.append(Destination(id=country_id, displayName=country_name).__dict__)
 
     return country_list
 
