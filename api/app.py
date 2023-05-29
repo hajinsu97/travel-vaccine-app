@@ -1,4 +1,4 @@
-from flask import render_template  # Remove: import Flask
+from flask import redirect  # Remove: import Flask
 import connexion
 
 app = connexion.App(__name__, specification_dir="./")
@@ -7,7 +7,7 @@ app.add_api("swagger.yml")
 
 @app.route("/")
 def home():
-    return render_template("home.html")
+    return redirect('/api/ui')
 
 
 if __name__ == "__main__":
