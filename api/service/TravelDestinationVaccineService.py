@@ -1,3 +1,4 @@
+from typing import List
 import requests
 from bs4 import BeautifulSoup
 from flask import abort
@@ -9,7 +10,7 @@ DESTINATIONS_LIST_URL = "https://wwwnc.cdc.gov/travel/destinations/list"
 DESTINATIONS_SELECT_LIST_ID = "thlrdssl-traveler"
 
 # TODO: Unit test getDestinations()
-def getDestinations() -> list[str]:
+def getDestinations() -> List[str]:
     page = requests.get(DESTINATIONS_LIST_URL)
     soup = BeautifulSoup(page.content, "html.parser")
     country_list = []
