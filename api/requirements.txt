@@ -8,6 +8,7 @@ clickclick==20.10.2
 colorama==0.4.6
 connexion==2.14.1
 Flask==2.2.5
+Flask-Cors==3.0.10
 gunicorn==20.1.0
 idna==3.4
 inflection==0.5.1
