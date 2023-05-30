@@ -1,5 +1,6 @@
 __pycache__
 venv
 env
+.env
 .pytest_cache
 .coverage
