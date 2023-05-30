@@ -3,7 +3,7 @@ from flask_cors import CORS
 import connexion
 
 DEV_FRONTEND_ORIGIN='http://localhost:5173'
-PROD_FRONTEND_ORIGIN='https://travel-vaccine-api.onrender.com/'
+PROD_FRONTEND_ORIGIN='https://travel-vaccine-web.onrender.com'
 
 app = connexion.App(__name__, specification_dir="./")
 CORS(app.app, origins=[DEV_FRONTEND_ORIGIN, PROD_FRONTEND_ORIGIN])
