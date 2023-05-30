@@ -37,6 +37,7 @@ import { RouterView } from 'vue-router'
     },
     methods: {
       getDestinations() {
+        console.log(import.meta.env.VITE_API_PROXY_TARGET)
         const path = '/api/destinations';
         axios.get(path)
           .then((res) => {
