@@ -5,20 +5,31 @@
       <h3>✈️ Where are you travelling to?</h3>
       <select class="select-country" v-model="selectedCountry" @change="handleCountrySelected">
         <option disabled value="">Please select a country</option>
-        <option v-for="destination in destinations" :value="destination">{{ destination.displayName }}</option>
+        <option v-for="destination in destinationList" :value="destination">{{ destination.displayName }}</option>
       </select>
     </div>
     
-    <div v-if="selectedCountry" class="vaccine-info">
-      <h2>💉 Vaccine Information</h2>
-      <a :href="vaccineInfo.link" target="_blank">{{ selectedCountry.displayName }} on CDC website</a>
-      <ul>
-        <li v-for="vaccine in vaccineInfo.items" :key="vaccine.id">
-          <p class="vaccine-disease">Vaccine: {{ vaccine.disease }}</p>
-          <p class="vaccine-recommendations">Recommendations: {{ vaccine.recommendations }}</p>
+<div v-if="selectedCountry" class="vaccine-info">
+  <h2>💉 Vaccine Information</h2>
+  <a :href="vaccineInfoLink" target="_blank">{{ selectedCountry.displayName }} on CDC website</a>
+  <ul>
+    <li v-for="vaccine in vaccineList" :key="vaccine.id">
+      <p class="vaccine-disease">Vaccine: {{ vaccine.disease }}</p>
+      <p class="vaccine-recommendations">Recommendations: {{ vaccine.recommendations }}</p>
+      <ul class="dosage-list">
+        <li v-for="dosage in vaccine.dosages" :key="dosage.brandName">
+          <p><strong>Brand Name:</strong> {{ dosage.brandName }}</p>
+          <p><strong>Dose:</strong> {{ dosage.dose }}</p>
+          <p><strong>Form:</strong> {{ dosage.form }}</p>
+          <p><strong>Generic Name:</strong> {{ dosage.genericName }}</p>
+          <p><strong>Number of Doses:</strong> {{ dosage.numberOfDoses }}</p>
+          <p><strong>Schedule:</strong> {{ dosage.schedule }}</p>
         </li>
       </ul>
-    </div>
+    </li>
+  </ul>
+</div>
+
   </div>
 </template>
 
@@ -31,8 +42,9 @@ import { RouterView } from 'vue-router'
     data() {
       return {
         selectedCountry: '',
-        destinations: [],
-        vaccineInfo: {},
+        destinationList: [],
+        vaccineInfoLink: '',
+        vaccineList: [],
       };
     },
     methods: {
@@ -40,7 +52,7 @@ import { RouterView } from 'vue-router'
         const path = '/api/destinations';
         axios.get(path)
           .then((res) => {
-            this.destinations = res.data;
+            this.destinationList = res.data;
           })
           .catch((error) => {
             console.error('Error fetching destinations list:', error);
@@ -49,15 +61,18 @@ import { RouterView } from 'vue-router'
       async getVaccines() {
         try {
           const response = await axios.get(`/api/destinations/${this.selectedCountry.id}/vaccines`);
-          this.vaccineInfo = response.data;
-          console.log('Got vaccine info:', this.vaccineInfo)
+          const data = response.data;
+          this.vaccineInfoLink = data.link
+          this.vaccineList = data.items
+          console.log('Got vaccine info:', data)
         } catch (error) {
           console.error('Error fetching vaccine information:', error);
         }
       },
       handleCountrySelected() {
         console.log('Selected country:', this.selectedCountry);
-        this.getVaccines()
+        this.getVaccines();
+        // for vaccine in this.vaccines
       },
 
     },
