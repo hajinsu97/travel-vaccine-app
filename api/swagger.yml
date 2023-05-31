@@ -10,7 +10,7 @@ servers:
 paths:
   /destinations:
     get:
-      operationId: "service.TravelDestinationVaccineService.getDestinations"
+      operationId: "service.TravelDestinationVaccineService.get_destinations"
       tags:
         - "Destinations"
       summary: "Reads the list of travel destinations"
@@ -25,7 +25,7 @@ paths:
                   $ref: "#/components/schemas/Destination"
   /destinations/{country}/vaccines:
     get:
-      operationId: "service.TravelDestinationVaccineService.getVaccines"
+      operationId: "service.TravelDestinationVaccineService.get_vaccines"
       tags:
         - "Destinations"
       summary: "Reads the list of vaccines for {country}"
@@ -42,7 +42,7 @@ paths:
           description: "Country with the specified name not found"
   /vaccines/{disease}/dosages:
     get:
-      operationId: service.VaccineDosageService.getDosages
+      operationId: service.VaccineDosageService.get_dosages
       tags:
         - "Vaccines"
       summary: "Reads the list of dosages for {disease}"

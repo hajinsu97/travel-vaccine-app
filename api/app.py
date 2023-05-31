@@ -8,7 +8,7 @@ app = connexion.App(__name__, specification_dir="./")
 
 # Load environment variables from .env file
 load_dotenv()
-cors_origin = os.environ.get('TRAVEL_VACCINE_APP_WEB_URL')
+cors_origin = os.environ.get("TRAVEL_VACCINE_APP_WEB_URL")
 if cors_origin:
     CORS(app.app, origins=cors_origin)
 
@@ -17,7 +17,7 @@ app.add_api("swagger.yml")
 
 @app.route("/")
 def home():
-    return redirect('/api/ui')
+    return redirect("/api/ui")
 
 
 if __name__ == "__main__":
