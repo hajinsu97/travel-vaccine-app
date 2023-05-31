@@ -12,20 +12,24 @@ VACCINE_LOGIC_TABLE_COLUMN_HEADER_NUMBER_OF_DOSES = "Number of Doses"
 VACCINE_LOGIC_TABLE_COLUMN_HEADER_SCHEDULE_IN_MONTHS = "Schedule (months)"
 
 
-def getDosages(disease: str, dateOfBirth: str = None) -> List[Dosage]:
-    dosageList = []
+def get_dosages(disease: str, date_of_birth: str = None) -> List[Dosage]:
+    dosage_list = []
     with open(VACCINE_LOGIC_TABLE_FILE_NAME) as csv_file:
-        csv_reader = csv.DictReader(csv_file, delimiter=',')
+        csv_reader = csv.DictReader(csv_file, delimiter=",")
         line_count = 0
         for row in csv_reader:
-            currentDisease = row[VACCINE_LOGIC_TABLE_COLUMN_HEADER_DISEASE]
-            if (disease.lower().replace(" ", "-") == currentDisease.lower().replace(" ", "-")):
-                dosage = Dosage(row[VACCINE_LOGIC_TABLE_COLUMN_HEADER_DISEASE],
-                                row[VACCINE_LOGIC_TABLE_COLUMN_HEADER_GENERIC_NAME],
-                                row[VACCINE_LOGIC_TABLE_COLUMN_HEADER_BRAND_NAME],
-                                row[VACCINE_LOGIC_TABLE_COLUMN_HEADER_FORM],
-                                row[VACCINE_LOGIC_TABLE_COLUMN_HEADER_DOSE],
-                                row[VACCINE_LOGIC_TABLE_COLUMN_HEADER_NUMBER_OF_DOSES],
-                                row[VACCINE_LOGIC_TABLE_COLUMN_HEADER_SCHEDULE_IN_MONTHS])
-                dosageList.append(dosage.__dict__)
-    return dosageList
+            current_disease = row[VACCINE_LOGIC_TABLE_COLUMN_HEADER_DISEASE]
+            if disease.lower().replace(" ", "-") == current_disease.lower().replace(
+                " ", "-"
+            ):
+                dosage = Dosage(
+                    row[VACCINE_LOGIC_TABLE_COLUMN_HEADER_DISEASE],
+                    row[VACCINE_LOGIC_TABLE_COLUMN_HEADER_GENERIC_NAME],
+                    row[VACCINE_LOGIC_TABLE_COLUMN_HEADER_BRAND_NAME],
+                    row[VACCINE_LOGIC_TABLE_COLUMN_HEADER_FORM],
+                    row[VACCINE_LOGIC_TABLE_COLUMN_HEADER_DOSE],
+                    row[VACCINE_LOGIC_TABLE_COLUMN_HEADER_NUMBER_OF_DOSES],
+                    row[VACCINE_LOGIC_TABLE_COLUMN_HEADER_SCHEDULE_IN_MONTHS],
+                )
+                dosage_list.append(dosage.__dict__)
+    return dosage_list
