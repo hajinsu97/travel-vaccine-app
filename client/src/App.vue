@@ -17,7 +17,7 @@
       <p class="vaccine-disease">Vaccine: {{ vaccine.disease }}</p>
       <p class="vaccine-recommendations">Recommendations: {{ vaccine.recommendations }}</p>
       <ul class="dosage-list">
-        <li v-for="dosage in vaccine.dosages" :key="dosage.brandName">
+        <li v-for="dosage in vaccine.dosageList" :key="dosage.brandName">
           <p><strong>Brand Name:</strong> {{ dosage.brandName }}</p>
           <p><strong>Dose:</strong> {{ dosage.dose }}</p>
           <p><strong>Form:</strong> {{ dosage.form }}</p>
@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { RouterView } from 'vue-router'
+import {RouterView} from 'vue-router'
 </script>
 <script>
   import axios from 'axios';
@@ -44,7 +44,23 @@ import { RouterView } from 'vue-router'
         selectedCountry: '',
         destinationList: [],
         vaccineInfoLink: '',
-        vaccineList: [],
+        vaccineList: [
+            {
+                disease: '',
+                recommendations: '',
+                // TODO: what does this do? Do I need to define everything here?
+                dosageList: [
+                    {
+                        brandName: '',
+                        dose: '',
+                        form: '',
+                        genericName: '',
+                        numberOfDoses: null,
+                        schedule: ''
+                    }
+                ]
+            }
+        ],
       };
     },
     methods: {
@@ -68,11 +84,24 @@ import { RouterView } from 'vue-router'
         } catch (error) {
           console.error('Error fetching vaccine information:', error);
         }
+        this.vaccineList.forEach((vaccine) => {
+            vaccine.dosageList = this.getDosages(vaccine)
+            console.log(vaccine.dosageList)
+        })
       },
-      handleCountrySelected() {
-        console.log('Selected country:', this.selectedCountry);
-        this.getVaccines();
-        // for vaccine in this.vaccines
+      async getDosages(vaccine) {
+        try {
+          const response = await axios.get(`/api/vaccines/${vaccine.disease}/dosages`);
+          const data = response.data;
+          console.log('Got dosage info:', data)
+          return data.items
+        } catch (error) {
+          console.error('Error fetching dosage information:', error);
+        }
+      },
+      async handleCountrySelected() {
+          console.log('Selected country:', this.selectedCountry);
+          await this.getVaccines();
       },
 
     },
