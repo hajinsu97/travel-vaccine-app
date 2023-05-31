@@ -113,24 +113,29 @@ components:
     Dosage:
       type: object
       properties:
-        genericName:
-          type: string
-          description: The name of the active ingredient.
-          example: "Hepatitis A vaccine, inactivated"
         brandName:
           type: string
           description: The brand name of the vaccine.
           example: "Avaxim"
+        dose:
+          type: string
+          description: The amount of a medication to take at one specific time.
+          example: "1.5 mL"
+        form:
+          type: string
+          enum: [Oral tablet, Injectable, Oral buffer solution]
+          description: The form that the medication is taken in.
+          example: Injectable
+        genericName:
+          type: string
+          description: The name of the active ingredient.
+          example: "Hepatitis A vaccine, inactivated"
         minAge:
           $ref: "#/components/schemas/Age"
           description: The minimum age (years) a person should be for the dosage.
         maxAge:
           $ref: "#/components/schemas/Age"
           description: The maximum age (years) a person should be for the dosage.
-        dose:
-          type: string
-          description: The amount of a medication to take at one specific time.
-          example: "1.5 ml"
         numberOfDoses:
           type: integer
           description: The number of total doses a patient needs to take.
@@ -139,7 +144,7 @@ components:
           type: string
           description: The schedule to take the dosage.
           example: "0, 8d+, 15d+"
-    DosageList: # TODO: Schema and actual not matching
+    DosageList:
       type: object
       properties:
         disease:
