@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from flask import abort
 from model.Destination import Destination
 from model.Vaccine import Vaccine
-from model.VaccinesList import VaccinesList
+from model.VaccineList import VaccineList
 
 DESTINATIONS_LIST_URL = "https://wwwnc.cdc.gov/travel/destinations/list"
 DESTINATIONS_SELECT_LIST_ID = "thlrdssl-traveler"
@@ -41,7 +41,7 @@ CLINICIAN_DISEASES_HTML_CLASS_NAME = "clinician-disease"
 CLINICIAN_RECOMMENDATIONS_HTML_CLASS_NAME = "clinician-recomendations"
 
 
-def get_vaccines(country: str) -> VaccinesList:
+def get_vaccines(country: str) -> VaccineList:
     destination_url = DESTINATIONS_URL_PREFIX + country
     page = requests.get(destination_url)
 
@@ -71,4 +71,4 @@ def get_vaccines(country: str) -> VaccinesList:
 
         vaccines_list.append(Vaccine(disease_name, recommendation).__dict__)
     # TODO: Missing Yellow fever recommendation
-    return VaccinesList(destination_url, vaccines_list).__dict__
+    return VaccineList(link=destination_url, items=vaccines_list).__dict__
