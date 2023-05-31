@@ -18,7 +18,7 @@ def get_dosages(disease: str, date_of_birth: str = None) -> DosageList:
         csv_reader = csv.DictReader(csv_file, delimiter=",")
         for row in csv_reader:
             current_disease = row[DISEASE_COLUMN_HEADER]
-            if disease == current_disease.lower().replace(" ", "-"):
+            if disease.lower().replace(" ", "-") == current_disease.lower().replace(" ", "-"):
                 dosage = Dosage(
                     generic_name=row[GENERIC_NAME_COLUMN_HEADER],
                     brand_name=row[BRAND_NAME_COLUMN_HEADER],
