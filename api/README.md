@@ -1,11 +1,10 @@
-# Travel-Vaccine-API
+# Travel Vaccine API
 
-API for retrieving latest vaccine information for travel destinations provided by the CDC
-<https://wwwnc.cdc.gov/travel/destinations/list>
+API for retrieving latest vaccine information for travel destinations.
 
-## Local Development
+## Installation
 
-Activate venv
+1. Activate venv
 
 ```bash
 # Create venv (for first time only)
@@ -16,11 +15,11 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
-Start local server
+2. Start local server
 
 ```bash
 python app.py
 ```
 
-Navigate to the Flask UI
+3. Navigate to the Flask UI
 <http://127.0.0.1:8000/api/ui/>
