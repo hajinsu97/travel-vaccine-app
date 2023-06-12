@@ -2,7 +2,7 @@
   <RouterView />
   <div id="app">
     <div class="country-dropdown">
-      <h3>✈️ Where are you travelling to?</h3>
+      <h2>✈️ Where are you travelling to?</h2>
       <select class="select-country" v-model="selectedCountry" @change="handleCountrySelected">
         <option disabled value="">Please select a country</option>
         <option v-for="destination in destinationList" :value="destination">{{ destination.displayName }}</option>
@@ -10,21 +10,23 @@
     </div>
     
 <div v-if="selectedCountry" class="vaccine-info">
-  <h2>💉 Vaccine Information</h2>
+  <h1>💉 Vaccine Information</h1>
   <a :href="vaccineInfoLink" target="_blank">{{ selectedCountry.displayName }} on CDC website</a>
   <ul>
-    <li v-for="vaccine in vaccineList" :key="vaccine.id">
-      <p class="vaccine-disease">Vaccine: {{ vaccine.disease }}</p>
+    <li v-for="vaccine in vaccineList" :key="vaccine.id" class="vaccine-item">
+      <h2 class="vaccine-disease">Vaccine: {{ vaccine.disease }}</h2>
       <p class="vaccine-recommendations">Recommendations: {{ vaccine.recommendations }}</p>
-      <ul class="dosage-list">
-        <li v-for="dosage in vaccine.dosageList" :key="dosage.brandName">
-          <p><strong>Brand Name:</strong> {{ dosage.brandName }}</p>
-          <p><strong>Dose:</strong> {{ dosage.dose }}</p>
-          <p><strong>Form:</strong> {{ dosage.form }}</p>
-          <p><strong>Generic Name:</strong> {{ dosage.genericName }}</p>
-          <p><strong>Number of Doses:</strong> {{ dosage.numberOfDoses }}</p>
-          <p><strong>Schedule:</strong> {{ dosage.schedule }}</p>
-        </li>
+      <ul class="dosage-list" v-if="vaccine.dosageList.length > 0">
+        <div class="dosage-box">
+          <li v-for="dosage in vaccine.dosageList" :key="dosage.brand_name" class="dosage-item">
+            <p><strong>Brand Name:</strong> {{ dosage.brand_name }}</p>
+            <p><strong>Dose:</strong> {{ dosage.dose }}</p>
+            <p><strong>Form:</strong> {{ dosage.form }}</p>
+            <p><strong>Generic Name:</strong> {{ dosage.generic_name }}</p>
+            <p><strong>Number of Doses:</strong> {{ dosage.number_of_doses }}</p>
+            <p><strong>Schedule:</strong> {{ dosage.schedule }}</p>
+          </li>
+        </div>
       </ul>
     </li>
   </ul>
@@ -49,16 +51,7 @@ import {RouterView} from 'vue-router'
                 disease: '',
                 recommendations: '',
                 // TODO: what does this do? Do I need to define everything here?
-                dosageList: [
-                    {
-                        brandName: '',
-                        dose: '',
-                        form: '',
-                        genericName: '',
-                        numberOfDoses: null,
-                        schedule: ''
-                    }
-                ]
+                dosageList: []
             }
         ],
       };
@@ -84,9 +77,8 @@ import {RouterView} from 'vue-router'
         } catch (error) {
           console.error('Error fetching vaccine information:', error);
         }
-        this.vaccineList.forEach((vaccine) => {
-            vaccine.dosageList = this.getDosages(vaccine)
-            console.log(vaccine.dosageList)
+        this.vaccineList.forEach(async (vaccine) => {
+            vaccine.dosageList = await this.getDosages(vaccine)
         })
       },
       async getDosages(vaccine) {
