@@ -9,12 +9,12 @@ Travel Vaccine App is a web app for retrieving the latest vaccine information fo
 
 - [API](https://github.com/hajinsu97/travel-vaccine-app/blob/main/api/README.md#installation)
 - [UI](https://github.com/hajinsu97/travel-vaccine-app/blob/main/ui-react/README.md#installation)
-- *Deprecated*[UI-Vue](https://github.com/hajinsu97/travel-vaccine-app/blob/main/ui-vue/README.md#installation)
+- *Deprecated* [UI-Vue](https://github.com/hajinsu97/travel-vaccine-app/blob/main/ui-vue/README.md#installation)
 
 ## Usage
 
-Web App: https://travel-vaccine-web.onrender.com/
-API: https://travel-vaccine-api.onrender.com/
+- Web App: https://travel-vaccine-web.onrender.com/
+- API: https://travel-vaccine-api.onrender.com/
 
 ## Contributing
 
