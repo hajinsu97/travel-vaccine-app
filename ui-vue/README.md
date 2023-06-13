@@ -1,4 +1,6 @@
-# client
+# *DEPRECATED* Vue.js UI
+
+This UI has been deprecated in favor of React!
 
 This template should help get you started developing with Vue 3 in Vite.
 
