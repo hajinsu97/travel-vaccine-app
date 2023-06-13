@@ -4,79 +4,79 @@ import './App.css';
 
 
 function App() {
-  const [selectedCountry, setSelectedCountry] = useState('');
+  const [selectedDestination, setSelectedDestination] = useState({});
   const [destinationList, setDestinationList] = useState([]);
   const [vaccineInfoLink, setVaccineInfoLink] = useState('');
-  const [vaccineList, setVaccineList] = useState([
-    {
-      disease: '',
-      recommendations: '',
-      dosageList: []
-    }
-  ]);
+  const [vaccineList, setVaccineList] = useState([])
 
   useEffect(() => {
-    getDestinations();
+    const fetchDestination = () => {
+      const path = '/api/destinations';
+      axios
+        .get(path)
+        .then((res) => {
+          setDestinationList(res.data);
+        })
+        .catch((error) => {
+          console.error('Error fetching destinations list:', error);
+        });
+    };
+    
+    fetchDestination();
   }, []);
 
-  const getDestinations = () => {
-    const path = '/api/destinations';
-    axios
-      .get(path)
-      .then((res) => {
-        setDestinationList(res.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching destinations list:', error);
-      });
-  };
+  useEffect(() => {
+    const fetchVaccines = async () => {
+      try {
+        const response = await axios.get(`/api/destinations/${selectedDestination.id}/vaccines`);
+        const data = response.data;
+        setVaccineInfoLink(data.link);
+        setVaccineList(data.items);
+        console.log('Got vaccine info:', data);
+      } catch (error) {
+        console.error('Error fetching vaccine information:', error);
+      }
+    };
 
-  const getVaccines = async () => {
-    try {
-      const response = await axios.get(`/api/destinations/${selectedCountry.id}/vaccines`);
-      const data = response.data;
-      setVaccineInfoLink(data.link);
-      setVaccineList(data.items);
-      console.log('Got vaccine info:', data);
-    } catch (error) {
-      console.error('Error fetching vaccine information:', error);
-    }
-
-    vaccineList.forEach((vaccine) => {
-      vaccine.dosageList = getDosages(vaccine);
-    });
-  };
-
-  const getDosages = async (vaccine) => {
-    try {
-      const response = await axios.get(`/api/vaccines/${vaccine.disease}/dosages`);
-      const data = response.data;
-      console.log('Got dosage info:', data);
-      return data.items;
-    } catch (error) {
-      console.error('Error fetching dosage information:', error);
-    }
-  };
+    console.info('Selected destination:', selectedDestination);
+    fetchVaccines();
+    // fetchVaccineDosages();
+  },[selectedDestination])
 
   useEffect(() => {
-    console.log(selectedCountry, '- Has changed')
-    getVaccines();
-  },[getVaccines, selectedCountry])
+    const fetchVaccineDosages = async () => {
+      try {
+        const requests = vaccineList.map(vaccine =>
+          axios.get(`/api/vaccines/${vaccine.disease}/dosages`)
+        );
+        const responses = await Promise.all(requests);
+  
+        // Adds dosageList as a field in vaccine
+        const updatedVaccineList = vaccineList.map((vaccine, index) => ({
+          ...vaccine,
+          dosageList: responses[index].data.items
+        }));
+  
+        setVaccineList(updatedVaccineList);
+      } catch (error) {
+        console.error('Error fetching vaccine dosages:', error);
+      }
+    };
 
+    fetchVaccineDosages();
+  },[vaccineInfoLink])
 
-  // const handleCountrySelected = async (event) => {
-  //   const selectedValue = event.target.value;
-  //   const selectedDestination = destinationList.find((destination) => destination.id === selectedValue);
-  //   await setSelectedCountry(selectedDestination);
-  //   console.info('Selected country:', selectedDestination);
-  //   getVaccines();
-  // };
+  const handleDestinationSelected = async (event) => {
+    const selectedDestinationId = event.target.value;
+    const selectedDestination = destinationList.find((destination) => destination.id === selectedDestinationId);
+    setSelectedDestination(selectedDestination);
+  };
 
   return (
     <div id="app">
-      <div className="country-dropdown">
+      <div className="destination-dropdown">
         <h2>✈️ Where are you travelling to?</h2>
-        <select className="select-country" value={selectedCountry.id} onChange={setSelectedCountry}>
+        <select className="select-destination" value={selectedDestination.id} onChange={handleDestinationSelected}>
           <option disabled value="">
             Please select a country
           </option>
@@ -88,18 +88,18 @@ function App() {
         </select>
       </div>
 
-      {selectedCountry && (
+      {selectedDestination && vaccineList.length > 0 && (
         <div className="vaccine-info">
           <h1>💉 Vaccine Information</h1>
           <a href={vaccineInfoLink} target="_blank" rel="noopener noreferrer">
-            {selectedCountry.displayName} on CDC website
+            {selectedDestination.displayName} on CDC website
           </a>
           <ul>
             {vaccineList.map((vaccine) => (
-              <li key={vaccine.id} className="vaccine-item">
+              <li key={vaccine.disease} className="vaccine-item">
                 <h2 className="vaccine-disease">Vaccine: {vaccine.disease}</h2>
                 <p className="vaccine-recommendations">Recommendations: {vaccine.recommendations}</p>
-                {vaccine.dosageList.length > 0 && (
+                {vaccine.dosageList && vaccine.dosageList.length > 0 && (
                   <ul className="dosage-list">
                     {vaccine.dosageList.map((dosage) => (
                       <div key={dosage.brandName} className="dosage-box">
