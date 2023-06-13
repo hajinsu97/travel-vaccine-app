@@ -3,12 +3,13 @@
 Travel Vaccine App is a web app for retrieving the latest vaccine information for travel destinations.
 
 - `/api`: API for retrieving latest vaccine information for travel destinations provided by the CDC built using Flask
-- `/client`: Web user interface of the travel vaccine app built using Vue.js
+- `/ui-react`: Web user interface of the travel vaccine app built using React.js
 
 ## Installation
 
 - [API](https://github.com/hajinsu97/travel-vaccine-app/blob/main/api/README.md#installation)
-- [UI](https://github.com/hajinsu97/travel-vaccine-app/blob/main/api/README.md#installation)
+- [UI](https://github.com/hajinsu97/travel-vaccine-app/blob/main/ui-react/README.md#installation)
+- *Deprecated*[UI-Vue](https://github.com/hajinsu97/travel-vaccine-app/blob/main/ui-vue/README.md#installation)
 
 ## Usage
 
