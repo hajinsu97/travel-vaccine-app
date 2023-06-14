@@ -67,6 +67,7 @@ function App() {
   },[vaccineInfoLink])
 
   const handleDestinationSelected = async (event) => {
+    setVaccineList([]);
     const selectedDestinationId = event.target.value;
     const selectedDestination = destinationList.find((destination) => destination.id === selectedDestinationId);
     setSelectedDestination(selectedDestination);
@@ -97,7 +98,7 @@ function App() {
           <ul>
             {vaccineList.map((vaccine) => (
               <li key={vaccine.disease} className="vaccine-item">
-                <h2 className="vaccine-disease">Vaccine: {vaccine.disease}</h2>
+                <h2 className="vaccine-disease">{vaccine.disease}</h2>
                 <p className="vaccine-recommendations">Recommendations: {vaccine.recommendations}</p>
                 {vaccine.dosageList && vaccine.dosageList.length > 0 && (
                   <ul className="dosage-list">
