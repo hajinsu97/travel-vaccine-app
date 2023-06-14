@@ -1,4 +1,4 @@
 class Destination:
-    def __init__(self, id: str, displayName: str):
+    def __init__(self, id: str, display_name: str):
         self.id = id
-        self.displayName = displayName
+        self.display_name = display_name

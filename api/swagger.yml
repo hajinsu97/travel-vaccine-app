@@ -113,7 +113,7 @@ components:
     Dosage:
       type: object
       properties:
-        brandName:
+        brand_name:
           type: string
           description: The brand name of the vaccine.
           example: "Avaxim"
@@ -126,17 +126,17 @@ components:
           enum: [Oral tablet, Injectable, Oral buffer solution]
           description: The form that the medication is taken in.
           example: Injectable
-        genericName:
+        generic_name:
           type: string
           description: The name of the active ingredient.
           example: "Hepatitis A vaccine, inactivated"
-        minAge:
+        min_age:
           $ref: "#/components/schemas/Age"
           description: The minimum age (years) a person should be for the dosage.
-        maxAge:
+        max_age:
           $ref: "#/components/schemas/Age"
           description: The maximum age (years) a person should be for the dosage.
-        numberOfDoses:
+        number_of_doses:
           type: integer
           description: The number of total doses a patient needs to take.
           example: 3
@@ -174,7 +174,7 @@ components:
           type: string
           example: south-korea
           description: Id of the country.
-        displayName:
+        display_name:
           type: string
           example: South Korea
           description: Country's display name.

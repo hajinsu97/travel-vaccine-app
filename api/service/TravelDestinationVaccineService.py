@@ -28,7 +28,7 @@ def get_destinations() -> List[str]:
             country_id = destination_url_path.split("/")[-1]
             country_name = li.find("a").text
             country_list.append(
-                Destination(id=country_id, displayName=country_name).__dict__
+                Destination(id=country_id, display_name=country_name).__dict__
             )
 
     return country_list
