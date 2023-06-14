@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Collapsible from 'react-collapsible';
 import axios from 'axios';
 import './App.css';
 
@@ -97,36 +98,37 @@ function App() {
           <ul>
             {vaccineList.map((vaccine) => (
               <li key={vaccine.disease} className="vaccine-item">
-                <h2 className="vaccine-disease">Vaccine: {vaccine.disease}</h2>
-                <p className="vaccine-recommendations">Recommendations: {vaccine.recommendations}</p>
-                {vaccine.dosageList && vaccine.dosageList.length > 0 && (
-                  <ul className="dosage-list">
-                    {vaccine.dosageList.map((dosage) => (
-                      <div key={dosage.brandName} className="dosage-box">
-                        <li className="dosage-item">
-                          <p>
-                            <strong>Brand Name:</strong> {dosage.brand_name}
-                          </p>
-                          <p>
-                            <strong>Dose:</strong> {dosage.dose}
-                          </p>
-                          <p>
-                            <strong>Form:</strong> {dosage.form}
-                          </p>
-                          <p>
-                            <strong>Generic Name:</strong> {dosage.generic_name}
-                          </p>
-                          <p>
-                            <strong>Number of Doses:</strong> {dosage.number_of_doses}
-                          </p>
-                          <p>
-                            <strong>Schedule:</strong> {dosage.schedule}
-                          </p>
-                        </li>
-                      </div>
-                    ))}
-                  </ul>
-                )}
+                <Collapsible className="vaccine-disease" trigger={vaccine.disease}>
+                  <p className="vaccine-recommendations">Recommendations: {vaccine.recommendations}</p>
+                  {vaccine.dosageList && vaccine.dosageList.length > 0 && (
+                    <ul className="dosage-list">
+                      {vaccine.dosageList.map((dosage) => (
+                        <div key={dosage.brandName} className="dosage-box">
+                          <li className="dosage-item">
+                            <p>
+                              <strong>Brand Name:</strong> {dosage.brand_name}
+                            </p>
+                            <p>
+                              <strong>Dose:</strong> {dosage.dose}
+                            </p>
+                            <p>
+                              <strong>Form:</strong> {dosage.form}
+                            </p>
+                            <p>
+                              <strong>Generic Name:</strong> {dosage.generic_name}
+                            </p>
+                            <p>
+                              <strong>Number of Doses:</strong> {dosage.number_of_doses}
+                            </p>
+                            <p>
+                              <strong>Schedule:</strong> {dosage.schedule}
+                            </p>
+                          </li>
+                        </div>
+                      ))}
+                    </ul>
+                  )}
+                </Collapsible>
               </li>
             ))}
           </ul>
