@@ -82,7 +82,7 @@ function App() {
           </option>
           {destinationList.map((destination) => (
             <option key={destination.id} value={destination.id}>
-              {destination.displayName}
+              {destination.display_name}
             </option>
           ))}
         </select>
@@ -92,7 +92,7 @@ function App() {
         <div className="vaccine-info">
           <h1>💉 Vaccine Information</h1>
           <a href={vaccineInfoLink} target="_blank" rel="noopener noreferrer">
-            {selectedDestination.displayName} on CDC website
+            {selectedDestination.display_name} on CDC website
           </a>
           <ul>
             {vaccineList.map((vaccine) => (
