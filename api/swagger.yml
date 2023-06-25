@@ -48,7 +48,6 @@ paths:
       summary: "Reads the list of dosages for {disease}"
       parameters:
         - $ref: "#/components/parameters/disease"
-        - $ref: "#/components/parameters/dateOfBirth"
       responses:
         "200":
           description: "Successfully read dosages list"
@@ -58,6 +57,56 @@ paths:
                 $ref: "#/components/schemas/DosageList"
         "404":
           description: "Disease with the specified name not found"
+  /vaccines/{disease}/dosages/search:
+    post:
+      operationId: service.VaccineDosageService.search_dosages
+      tags:
+        - "Vaccines"
+      summary: Get a list of dosages filtered on the provided data.
+      parameters:
+        - $ref: "#/components/parameters/disease"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_info:
+                  type: object
+                  properties:
+                    birthdate:
+                      type: string
+                      format: date
+                      description: The user's birthdate (YYYY-MM-DD)
+                    # allergies:
+                    #   type: array
+                    #   items:
+                    #     type: string
+                    #   description: An array of allergies the user has
+              example:
+                user:
+                  birthdate: 1990-01-01
+                  # allergies:
+                  #   - Penicillin
+                  #   - Sulfa
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DosageList"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: Invalid request payload
 
 components:
   parameters:
@@ -77,14 +126,6 @@ components:
         example: hepatitis-b
       required: true
       description: "Name of the disease to get a vaccine for"
-    dateOfBirth:
-      name: dateOfBirth
-      in: query
-      schema:
-        type: string
-        format: date
-        example: 2000-03-31
-      description: "Patient's date of birth"
   schemas:
     Vaccine:
       type: object
