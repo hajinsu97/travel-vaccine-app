@@ -12,9 +12,15 @@ NUMBER_OF_DOSES_COLUMN_HEADER = "Number of Doses"
 SCHEDULE_COLUMN_HEADER = "Schedule (months)"
 
 
-def get_dosages(disease: str, date_of_birth: str = None) -> DosageList:
+def get_dosages(disease: str, csv_file_name=VACCINE_LOGIC_TABLE_FILE_NAME) -> DosageList:
+    """
+    Return a list of all Dosages for a given disease.
+
+    :param disease: Name of the disease
+    :return: List of Dosage object
+    """
     dosage_list = []
-    with open(VACCINE_LOGIC_TABLE_FILE_NAME) as csv_file:
+    with open(csv_file_name) as csv_file:
         csv_reader = csv.DictReader(csv_file, delimiter=",")
         for row in csv_reader:
             current_disease = row[DISEASE_COLUMN_HEADER]
