@@ -30,7 +30,7 @@ def get_dosages(disease: str, csv_file_name=VACCINE_LOGIC_TABLE_FILE_NAME) -> Do
                     brand_name=row[BRAND_NAME_COLUMN_HEADER],
                     form=row[FORM_COLUMN_HEADER],
                     dose=row[DOSE_COLUMN_HEADER],
-                    number_of_doses = 0 if row[NUMBER_OF_DOSES_COLUMN_HEADER] == '' else int(row[NUMBER_OF_DOSES_COLUMN_HEADER]),
+                    number_of_doses = 0 if not row[NUMBER_OF_DOSES_COLUMN_HEADER] else int(row[NUMBER_OF_DOSES_COLUMN_HEADER]),
                     schedule=row[SCHEDULE_COLUMN_HEADER],
                 )
                 dosage_list.append(dosage.__dict__)
