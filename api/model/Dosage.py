@@ -1,5 +1,4 @@
-from model.Age import Age
-
+from model.age import Age
 
 class Dosage:
     def __init__(

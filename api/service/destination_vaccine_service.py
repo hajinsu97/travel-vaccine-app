@@ -2,9 +2,9 @@ from typing import List
 import requests
 from bs4 import BeautifulSoup
 from flask import abort
-from model.Destination import Destination
-from model.Vaccine import Vaccine
-from model.VaccineList import VaccineList
+from model.destination import Destination
+from model.vaccine import Vaccine
+from model.vaccine_list import VaccineList
 
 DESTINATIONS_LIST_URL = "https://wwwnc.cdc.gov/travel/destinations/list"
 DESTINATIONS_SELECT_LIST_ID = "thlrdssl-traveler"
