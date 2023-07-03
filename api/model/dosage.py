@@ -1,4 +1,4 @@
-from model.age import Age
+from model.age import Age, AgeRange
 
 class Dosage:
     def __init__(
@@ -9,8 +9,7 @@ class Dosage:
         dose: str,
         number_of_doses: int,
         schedule: str,
-        min_age: Age,
-        max_age: Age,
+        age_range: AgeRange,
     ):
         self.generic_name = generic_name
         self.brand_name = brand_name
@@ -18,5 +17,4 @@ class Dosage:
         self.dose = dose
         self.number_of_doses = number_of_doses
         self.schedule = schedule
-        self.min_age = min_age
-        self.max_age = max_age
+        self.age_range = age_range

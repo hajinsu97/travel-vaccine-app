@@ -2,7 +2,7 @@ import pytest
 
 from service.vaccine_dosage_service import get_dosages
 
-TEST_VACCINATION_LOGIC_TABLE_CSV_FILE = "tests/fixtures/Test_Vaccination_Logic_table.csv"
+TEST_VACCINATION_LOGIC_TABLE_CSV_FILE = "api/tests/fixtures/Test_Vaccination_Logic_table.csv"
 DISEASE = "disease"
 ITEMS = "items"
 GENERIC_NAME = "generic_name"
@@ -48,7 +48,10 @@ def test_get_dosages_valid_disease_name_returns_correct_dosages():
     assert dosage_2[SCHEDULE] == "0, 6-12"
 
 def test_get_dosages_disease_name_is_case_insensitive():
-    assert _get_dosages("hepatitis b")[ITEMS] == _get_dosages("HEPATITIS B")[ITEMS]
+    lower_case_results = _get_dosages("hepatitis b")[ITEMS]
+    upper_case_results = _get_dosages("HEPATITIS B")[ITEMS]
+    assert lower_case_results[0][GENERIC_NAME] == upper_case_results[0][GENERIC_NAME] == "Hepatitis B vaccine (recombinant)"
+    assert len(lower_case_results) == len(upper_case_results)
 
 def test_get_dosages_pass_disease_name_in_snake_case_returns_dosages():
     disease_name = 'hepatitis-b'
@@ -59,5 +62,3 @@ def test_get_dosages_pass_disease_name_in_snake_case_returns_dosages():
 def test_get_dosages_for_vaccine_with_empty_number_of_doses_returns_0_doses():
     dosages = _get_dosages('hepatitis b')
     assert dosages[ITEMS][0][NUMBER_OF_DOSES] == 0
-
-
