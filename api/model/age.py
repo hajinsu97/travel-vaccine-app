@@ -30,28 +30,17 @@ class AgeRange:
                self.max_age == other.max_age
 
     @classmethod
-    def create_age_range_from_str(self, age_range_years: str, age_range_months: str):
+    def create_age_range_from_str(self, age_range: str, units: AgeUnit):
         """
         Return a min and max age based on a inputted age ranges which can be in one of 
         the following formats: '<9', '≤9', '>9', '≥9', '1-9'
         
-        :param age_range_years: Age range string in years 
-        :param age_range_months: Age range string in months 
-        :return Tuple containing the minimum and maximum age values.
+        :param age_range: Age range string in years 
+        :return AgeRange containing the minimum and maximum age values.
         """
 
         min_age = 0
         max_age = float('inf')
-
-        if age_range_years:
-            age_range = age_range_years
-            units = AgeUnit.YEARS
-        elif age_range_months:
-            age_range = age_range_months
-            units = AgeUnit.MONTHS
-        else:
-            # No age restriction
-            return None
         
         try:
             if '-' in age_range: # 1-20 means including 1 and 20 

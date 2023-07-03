@@ -16,6 +16,8 @@ SCHEDULE_COLUMN_HEADER = "Schedule (months)"
 AGE_YEARS_COLUMN_HEADER = "Age (years)"
 AGE_MONTHS_COLUMN_HEADER = "Age (months)"
 
+class InvalidVaccineTableEntry(Exception):
+    pass
 
 def get_dosages(disease: str, csv_file_name=VACCINE_LOGIC_TABLE_FILE_NAME) -> DosageList:
     """
@@ -30,7 +32,7 @@ def get_dosages(disease: str, csv_file_name=VACCINE_LOGIC_TABLE_FILE_NAME) -> Do
         for row in csv_reader:
             current_disease = row[DISEASE_COLUMN_HEADER]
             if disease.lower().replace(" ", "-") == current_disease.lower().replace(" ", "-"):
-                age_range = AgeRange.create_age_range_from_str(row[AGE_YEARS_COLUMN_HEADER], row[AGE_MONTHS_COLUMN_HEADER])
+                age_range = _get_age_range(row[AGE_YEARS_COLUMN_HEADER], row[AGE_MONTHS_COLUMN_HEADER])
                 # min_age, max_age = Age()
                 dosage = Dosage(
                     generic_name=row[GENERIC_NAME_COLUMN_HEADER],
@@ -53,3 +55,18 @@ def search_dosages(disease: str) -> DosageList:
     :return: List of Dosage object
     """
     return get_dosages(disease)
+
+def _get_age_range(age_range_years: str, age_range_months: str) -> AgeRange:
+    """
+    Return a AgeRange that describes the min and max ages of the range.
+
+    :param age_range_years: Value in column for age range in years 
+    :param age_range_months: Value in column for age range in months 
+    :return: AgeRange object
+    """
+    if age_range_years and age_range_months:
+        raise InvalidVaccineTableEntry("Vaccine cannot have both age in years and age in months")
+    elif age_range_years:
+        return AgeRange.create_age_range_from_str(age_range_years, AgeUnit.YEARS)
+    elif age_range_months:
+        return AgeRange.create_age_range_from_str(age_range_months, AgeUnit.MONTHS)
