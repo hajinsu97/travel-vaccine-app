@@ -1,5 +1,6 @@
 from model.age import Age, AgeRange
 
+
 class Dosage:
     def __init__(
         self,
