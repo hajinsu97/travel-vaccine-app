@@ -21,6 +21,5 @@ def test_create_age_range_from_str(age_range, expected_min_age, expected_max_age
 
 
 # error test cases
-# test_create_age_range_from_str_both_months_and_years_inputted
 
 # test_create_age_range_from_str_both_months_and_years_inputted

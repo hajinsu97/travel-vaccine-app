@@ -6,6 +6,8 @@ from model.dosage import Dosage
 from model.dosage_list import DosageList
 
 VACCINE_LOGIC_TABLE_FILE_NAME = "Vaccination Logic table.csv"
+
+# Vaccine Logic Table Column Headers
 DISEASE_COLUMN_HEADER = "Disease/Illness"
 BRAND_NAME_COLUMN_HEADER = "Brand"
 FORM_COLUMN_HEADER = "Form"
@@ -15,6 +17,10 @@ NUMBER_OF_DOSES_COLUMN_HEADER = "Number of Doses"
 SCHEDULE_COLUMN_HEADER = "Schedule (months)"
 AGE_YEARS_COLUMN_HEADER = "Age (years)"
 AGE_MONTHS_COLUMN_HEADER = "Age (months)"
+
+# Error messages
+VACCINE_CANNOT_HAVE_BOTH_AGE_YEARS_AND_MONTHS = "Vaccine cannot have both age in years and age in months"
+
 
 class InvalidVaccineTableEntry(Exception):
     pass
@@ -65,7 +71,7 @@ def _get_age_range(age_range_years: str, age_range_months: str) -> AgeRange:
     :return: AgeRange object
     """
     if age_range_years and age_range_months:
-        raise InvalidVaccineTableEntry("Vaccine cannot have both age in years and age in months")
+        raise InvalidVaccineTableEntry(VACCINE_CANNOT_HAVE_BOTH_AGE_YEARS_AND_MONTHS)
     elif age_range_years:
         return AgeRange.create_age_range_from_str(age_range_years, AgeUnit.YEARS)
     elif age_range_months:

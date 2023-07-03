@@ -1,6 +1,6 @@
 import pytest
 
-from service.vaccine_dosage_service import get_dosages
+from service.vaccine_dosage_service import *
 
 TEST_VACCINATION_LOGIC_TABLE_CSV_FILE = "api/tests/fixtures/Test_Vaccination_Logic_table.csv"
 DISEASE = "disease"
@@ -62,3 +62,8 @@ def test_get_dosages_pass_disease_name_in_snake_case_returns_dosages():
 def test_get_dosages_for_vaccine_with_empty_number_of_doses_returns_0_doses():
     dosages = _get_dosages('hepatitis b')
     assert dosages[ITEMS][0][NUMBER_OF_DOSES] == 0
+
+def test_get_dosages_for_vaccine_with_both_age_years_age_months_raises_error():
+    with pytest.raises(InvalidVaccineTableEntry) as excinfo:
+        dosages = _get_dosages('age month and years')
+    assert VACCINE_CANNOT_HAVE_BOTH_AGE_YEARS_AND_MONTHS in str(excinfo.value)
